@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import model.*;
 
 @WebServlet("/servicio")
 public class PedidoController extends HttpServlet {
@@ -25,12 +26,15 @@ public class PedidoController extends HttpServlet {
             request.getRequestDispatcher("/formPolarizado.jsp").forward(request, response);
         } else if ("instalaciones".equals(tipo)) {
             request.getRequestDispatcher("/formInstalaciones.jsp").forward(request, response);
-        }else if ("reportes".equals(tipo)) {
+        } else if ("reportes".equals(tipo)) {
             GestionDAO dao = new GestionDAO();
             request.setAttribute("clientes", dao.obtenerClientes());
             request.setAttribute("pedidos", dao.obtenerPedidos());
+            request.setAttribute("pedidosLogotipo", dao.obtenerPedidosLogotipo());
+            request.setAttribute("pedidosInstalacion", dao.obtenerPedidosInstalacion());
             request.getRequestDispatcher("/reportes.jsp").forward(request, response);
-        }
+        }   
+        
     }
 
     @Override
@@ -39,20 +43,32 @@ public class PedidoController extends HttpServlet {
     	
         String tipo = request.getParameter("tipo");
 
-        if ("logotipos".equals(tipo)) {	
+        if ("logotipos".equals(tipo)) {
             Cliente cliente = new Cliente();
             cliente.setNombre(request.getParameter("nombre"));
             GestionDAO dao = new GestionDAO();
-            dao.guardarCliente(cliente);
+            int idCliente = dao.guardarCliente(cliente);
+
+            PedidoLogotipo pedido = new PedidoLogotipo();
+            pedido.setIdCliente(idCliente);
+            pedido.setServicioSeleccionado(request.getParameter("opcionLogotipo"));
+            dao.guardarPedidoLogotipo(pedido);
+
             request.getRequestDispatcher("/confirmacionLogotipo.jsp").forward(request, response);
 
         } else if ("instalaciones".equals(tipo)) {
             Cliente cliente = new Cliente();
             cliente.setNombre(request.getParameter("nombre"));
             GestionDAO dao = new GestionDAO();
-            dao.guardarCliente(cliente);
-            request.getRequestDispatcher("/confirmacionInstalaciones.jsp").forward(request, response);
-            
+            int idCliente = dao.guardarCliente(cliente);
+
+            PedidoInstalacion pedido = new PedidoInstalacion();
+            pedido.setIdCliente(idCliente);
+            pedido.setServicioSeleccionado(request.getParameter("opcionInstalacion"));
+            dao.guardarPedidoInstalacion(pedido);
+
+            request.getRequestDispatcher("/confirmacionInstalaciones.jsp").forward(request, response);  
+                
         } else if ("polarizado".equals(tipo)) {
             Cliente cliente = new Cliente();
             cliente.setNombre(request.getParameter("nombre"));

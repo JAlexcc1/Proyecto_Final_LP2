@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Cliente" %>
 <%@ page import="model.Pedido" %>
+<%@ page import="model.PedidoLogotipo" %>
+<%@ page import="model.PedidoInstalacion" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +48,7 @@
         </div>
     </div>
 
-    <!-- Pedidos -->
+    <!-- Pedidos Polarizado -->
     <div class="card mb-5 shadow-sm">
         <div class="card-header bg-primary text-white fw-bold">
             Pedidos Registrados - Polarizados
@@ -74,6 +76,78 @@
                         <td><%= p.getMaterial() %></td>
                         <td><%= p.getLuzVisible() %></td>
                         <td><%= p.getFechaPedido() %></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pedidos Logotipo -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-success text-white fw-bold">
+            Pedidos Registrados - Logotipos
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Cliente</th>
+                        <th>Servicio</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
+                        if (pedidosLogotipo != null) {
+                            for (PedidoLogotipo pl : pedidosLogotipo) {
+                    %>
+                    <tr>
+                        <td><%= pl.getIdPedidoLogotipo() %></td>
+                        <td><%= pl.getNombreCliente() %></td>
+                        <td><%= pl.getServicioSeleccionado() %></td>
+                        <td><%= pl.getFechaPedido() %></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pedidos Instalaciones -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-warning fw-bold">
+            Pedidos Registrados - Instalaciones
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Cliente</th>
+                        <th>Servicio</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        List<PedidoInstalacion> pedidosInstalacion = (List<PedidoInstalacion>) request.getAttribute("pedidosInstalacion");
+                        if (pedidosInstalacion != null) {
+                            for (PedidoInstalacion pi : pedidosInstalacion) {
+                    %>
+                    <tr>
+                        <td><%= pi.getIdPedidoInstalacion() %></td>
+                        <td><%= pi.getNombreCliente() %></td>
+                        <td><%= pi.getServicioSeleccionado() %></td>
+                        <td><%= pi.getFechaPedido() %></td>
                     </tr>
                     <%
                             }

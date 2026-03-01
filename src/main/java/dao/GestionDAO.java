@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import model.PedidoLogotipo;
+import model.PedidoInstalacion;
 
 public class GestionDAO {
 
@@ -68,6 +70,33 @@ public class GestionDAO {
         }
     }
     
+    public void guardarPedidoLogotipo(PedidoLogotipo pedido) {
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "INSERT INTO pedidosLogotipo (idCliente, servicioSeleccionado) VALUES (?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pedido.getIdCliente());
+            ps.setString(2, pedido.getServicioSeleccionado());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al guardar pedido logotipo: " + e.getMessage());
+        }
+    }
+
+    public void guardarPedidoInstalacion(PedidoInstalacion pedido) {
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "INSERT INTO pedidosInstalaciones (idCliente, servicioSeleccionado) VALUES (?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pedido.getIdCliente());
+            ps.setString(2, pedido.getServicioSeleccionado());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al guardar pedido instalacion: " + e.getMessage());
+        }
+    }
+    
+    
     public List<Cliente> obtenerClientes() {
         List<Cliente> lista = new ArrayList<>();
         try {
@@ -106,6 +135,50 @@ public class GestionDAO {
             }
         } catch (Exception e) {
             System.out.println("Error al obtener pedidos: " + e.getMessage());
+        }
+        return lista;
+    }
+    
+    public List<PedidoLogotipo> obtenerPedidosLogotipo() {
+        List<PedidoLogotipo> lista = new ArrayList<>();
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "SELECT pl.idPedidoLogotipo, pl.servicioSeleccionado, pl.fechaPedido, c.nombre " +
+                         "FROM pedidosLogotipo pl JOIN clientes c ON pl.idCliente = c.idCliente";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                PedidoLogotipo p = new PedidoLogotipo();
+                p.setIdPedidoLogotipo(rs.getInt("idPedidoLogotipo"));
+                p.setServicioSeleccionado(rs.getString("servicioSeleccionado"));
+                p.setFechaPedido(rs.getString("fechaPedido"));
+                p.setNombreCliente(rs.getString("nombre"));
+                lista.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al obtener pedidos logotipo: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    public List<PedidoInstalacion> obtenerPedidosInstalacion() {
+        List<PedidoInstalacion> lista = new ArrayList<>();
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "SELECT pi.idPedidoInstalacion, pi.servicioSeleccionado, pi.fechaPedido, c.nombre " +
+                         "FROM pedidosInstalaciones pi JOIN clientes c ON pi.idCliente = c.idCliente";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                PedidoInstalacion p = new PedidoInstalacion();
+                p.setIdPedidoInstalacion(rs.getInt("idPedidoInstalacion"));
+                p.setServicioSeleccionado(rs.getString("servicioSeleccionado"));
+                p.setFechaPedido(rs.getString("fechaPedido"));
+                p.setNombreCliente(rs.getString("nombre"));
+                lista.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al obtener pedidos instalacion: " + e.getMessage());
         }
         return lista;
     }
