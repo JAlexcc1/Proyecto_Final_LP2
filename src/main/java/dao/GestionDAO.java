@@ -183,4 +183,70 @@ public class GestionDAO {
         return lista;
     }
     
+    
+    public void actualizarCliente(int idCliente, String nombre) {
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "UPDATE clientes SET nombre = ? WHERE idCliente = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ps.setInt(2, idCliente);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar cliente: " + e.getMessage());
+        }
+    }
+
+    public void actualizarPedidoPolarizado(int idPedido, String material, String luzVisible) {
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "UPDATE pedidos SET material = ?, luzVisible = ? WHERE idPedido = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, material);
+            ps.setString(2, luzVisible);
+            ps.setInt(3, idPedido);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar pedido polarizado: " + e.getMessage());
+        }
+    }
+
+    public void actualizarPedidoLogotipo(int idPedidoLogotipo, String servicioSeleccionado) {
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "UPDATE pedidosLogotipo SET servicioSeleccionado = ? WHERE idPedidoLogotipo = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, servicioSeleccionado);
+            ps.setInt(2, idPedidoLogotipo);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar pedido logotipo: " + e.getMessage());
+        }
+    }
+
+    public void actualizarPedidoInstalacion(int idPedidoInstalacion, String servicioSeleccionado) {
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "UPDATE pedidosInstalaciones SET servicioSeleccionado = ? WHERE idPedidoInstalacion = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, servicioSeleccionado);
+            ps.setInt(2, idPedidoInstalacion);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar pedido instalacion: " + e.getMessage());
+        }
+    }
+    
+    public void eliminarCliente(int idCliente) {
+        try {
+            Connection conn = ConexionDB.getConexion();
+            String sql = "DELETE FROM clientes WHERE idCliente = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al eliminar cliente: " + e.getMessage());
+        }
+    }
+    
 }
