@@ -10,171 +10,172 @@
     <title>Reportes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body style="background-color: #111111;">
 
-<div class="container mt-5">
+<!-- Navbar -->
+<nav class="navbar navbar-dark border-bottom border-secondary" style="background-color: #1a1a1a;">
+    <div class="container">
+        <span class="navbar-brand fw-bold fs-4 text-white">📊 Panel de Reportes</span>
+        <a href="inicio" class="btn btn-outline-light btn-sm">← Volver al inicio</a>
+    </div>
+</nav>
 
-    <h2 class="mb-4 text-center fw-bold">Panel de Reportes</h2>
+<div class="container py-5">
 
-<!-- Layout principal -->
-<div class="row mb-5">
+    <div class="row mb-5">
 
-    <!-- Clientes - columna izquierda -->
-    <div class="col-md-3">
-        <div class="card shadow-sm">
-            <div class="card-header bg-success text-white fw-bold">
-                Clientes Registrados
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-striped table-hover mb-0">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
-                            if (clientes != null) {
-                                for (Cliente c : clientes) {
-                        %>
-                        <tr>
-                            <td><%= c.getIdCliente() %></td>
-                            <td><%= c.getNombre() %></td>
-                        </tr>
-                        <%
+        <!-- Clientes izquierda -->
+        <div class="col-md-3">
+            <div class="card border border-secondary shadow" style="background-color: #1a1a1a;">
+                <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+                    👥 Clientes Registrados
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-dark table-striped table-hover mb-0">
+                        <thead>
+                            <tr class="border-secondary">
+                                <th class="text-secondary">ID</th>
+                                <th class="text-secondary">Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+                                if (clientes != null) {
+                                    for (Cliente c : clientes) {
+                            %>
+                            <tr>
+                                <td class="text-white-50"><%= c.getIdCliente() %></td>
+                                <td class="text-white"><%= c.getNombre() %></td>
+                            </tr>
+                            <%
+                                    }
                                 }
-                            }
-                        %>
-                    </tbody>
-                </table>
+                            %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
+
+        <!-- Pedidos derecha -->
+        <div class="col-md-9">
+
+            <!-- Polarizados -->
+            <div class="card border border-secondary shadow mb-4" style="background-color: #1a1a1a;">
+                <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+                    🚗 Pedidos Registrados - Polarizados
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-dark table-striped table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-secondary">ID Pedido</th>
+                                <th class="text-secondary">Cliente</th>
+                                <th class="text-secondary">Material</th>
+                                <th class="text-secondary">Luz Visible</th>
+                                <th class="text-secondary">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
+                                if (pedidos != null) {
+                                    for (Pedido p : pedidos) {
+                            %>
+                            <tr>
+                                <td class="text-white-50"><%= p.getIdPedido() %></td>
+                                <td class="text-white"><%= p.getNombreCliente() %></td>
+                                <td class="text-white"><%= p.getMaterial() %></td>
+                                <td class="text-white"><%= p.getLuzVisible() %></td>
+                                <td class="text-white-50"><%= p.getFechaPedido() %></td>
+                            </tr>
+                            <%
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Logotipos -->
+            <div class="card border border-secondary shadow mb-4" style="background-color: #1a1a1a;">
+                <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+                    🎨 Pedidos Registrados - Logotipos
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-dark table-striped table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-secondary">ID Pedido</th>
+                                <th class="text-secondary">Cliente</th>
+                                <th class="text-secondary">Servicio</th>
+                                <th class="text-secondary">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
+                                if (pedidosLogotipo != null) {
+                                    for (PedidoLogotipo pl : pedidosLogotipo) {
+                            %>
+                            <tr>
+                                <td class="text-white-50"><%= pl.getIdPedidoLogotipo() %></td>
+                                <td class="text-white"><%= pl.getNombreCliente() %></td>
+                                <td class="text-white"><%= pl.getServicioSeleccionado() %></td>
+                                <td class="text-white-50"><%= pl.getFechaPedido() %></td>
+                            </tr>
+                            <%
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Instalaciones -->
+            <div class="card border border-secondary shadow mb-4" style="background-color: #1a1a1a;">
+                <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+                    ⚡ Pedidos Registrados - Instalaciones
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-dark table-striped table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-secondary">ID Pedido</th>
+                                <th class="text-secondary">Cliente</th>
+                                <th class="text-secondary">Servicio</th>
+                                <th class="text-secondary">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                List<PedidoInstalacion> pedidosInstalacion = (List<PedidoInstalacion>) request.getAttribute("pedidosInstalacion");
+                                if (pedidosInstalacion != null) {
+                                    for (PedidoInstalacion pi : pedidosInstalacion) {
+                            %>
+                            <tr>
+                                <td class="text-white-50"><%= pi.getIdPedidoInstalacion() %></td>
+                                <td class="text-white"><%= pi.getNombreCliente() %></td>
+                                <td class="text-white"><%= pi.getServicioSeleccionado() %></td>
+                                <td class="text-white-50"><%= pi.getFechaPedido() %></td>
+                            </tr>
+                            <%
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <!-- Pedidos - columna derecha -->
-    <div class="col-md-9">
-
-        <!-- Pedidos Polarizado -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-primary text-white fw-bold">
-                Pedidos Registrados - Polarizados
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-striped table-hover mb-0">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID Pedido</th>
-                            <th>Cliente</th>
-                            <th>Material</th>
-                            <th>Luz Visible</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
-                            if (pedidos != null) {
-                                for (Pedido p : pedidos) {
-                        %>
-                        <tr>
-                            <td><%= p.getIdPedido() %></td>
-                            <td><%= p.getNombreCliente() %></td>
-                            <td><%= p.getMaterial() %></td>
-                            <td><%= p.getLuzVisible() %></td>
-                            <td><%= p.getFechaPedido() %></td>
-                        </tr>
-                        <%
-                                }
-                            }
-                        %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Pedidos Logotipo -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-success text-white fw-bold">
-                Pedidos Registrados - Logotipos
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-striped table-hover mb-0">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID Pedido</th>
-                            <th>Cliente</th>
-                            <th>Servicio</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
-                            if (pedidosLogotipo != null) {
-                                for (PedidoLogotipo pl : pedidosLogotipo) {
-                        %>
-                        <tr>
-                            <td><%= pl.getIdPedidoLogotipo() %></td>
-                            <td><%= pl.getNombreCliente() %></td>
-                            <td><%= pl.getServicioSeleccionado() %></td>
-                            <td><%= pl.getFechaPedido() %></td>
-                        </tr>
-                        <%
-                                }
-                            }
-                        %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Pedidos Instalaciones -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-warning fw-bold">
-                Pedidos Registrados - Instalaciones
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-striped table-hover mb-0">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID Pedido</th>
-                            <th>Cliente</th>
-                            <th>Servicio</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            List<PedidoInstalacion> pedidosInstalacion = (List<PedidoInstalacion>) request.getAttribute("pedidosInstalacion");
-                            if (pedidosInstalacion != null) {
-                                for (PedidoInstalacion pi : pedidosInstalacion) {
-                        %>
-                        <tr>
-                            <td><%= pi.getIdPedidoInstalacion() %></td>
-                            <td><%= pi.getNombreCliente() %></td>
-                            <td><%= pi.getServicioSeleccionado() %></td>
-                            <td><%= pi.getFechaPedido() %></td>
-                        </tr>
-                        <%
-                                }
-                            }
-                        %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-</div>
 
     <div class="text-center mb-3">
-        <a href="servicio?tipo=actualizarReporte" class="btn btn-warning px-4">Editar / Eliminar Registros</a>
-    </div>
-
-    <div class="text-center">
-        <a href="inicio" class="btn btn-secondary px-4">Volver al inicio</a>
+        <a href="servicio?tipo=actualizarReporte" class="btn btn-outline-light px-4 me-2">✏️ Modificar </a>
     </div>
 
 </div>

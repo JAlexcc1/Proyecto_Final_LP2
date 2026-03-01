@@ -10,18 +10,27 @@
     <title>Actualizar Reportes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<div class="container mt-5">
+<body style="background-color: #111111;">
 
-    <h2 class="mb-4 text-center fw-bold">Actualizar Reportes</h2>
+<!-- Navbar -->
+<nav class="navbar navbar-dark border-bottom border-secondary" style="background-color: #1a1a1a;">
+    <div class="container">
+        <span class="navbar-brand fw-bold fs-4 text-white">✏️ Actualizar Reportes</span>
+        <a href="servicio?tipo=reportes" class="btn btn-outline-light btn-sm">← Volver a Reportes</a>
+    </div>
+</nav>
+
+<div class="container py-5">
 
     <!-- Clientes -->
-    <div class="card mb-5 shadow-sm">
-        <div class="card-header bg-success text-white fw-bold">Clientes Registrados</div>
+    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
+        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+            👥 Clientes Registrados
+        </div>
         <div class="card-body p-0">
-            <table class="table table-striped table-hover mb-0">
-                <thead class="table-dark">
-                    <tr><th>ID</th><th>Nombre</th><th>Guardar</th><th>Eliminar</th></tr>
+            <table class="table table-dark table-striped table-hover mb-0">
+                <thead>
+                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Nombre</th><th class="text-secondary">Guardar</th><th class="text-secondary">Eliminar</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -33,14 +42,14 @@
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarCliente">
                         <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
-                        <td><%= c.getIdCliente() %></td>
-                        <td><input type="text" name="nombre" value="<%= c.getNombre() %>" class="form-control form-control-sm"></td>
-                        <td><button type="submit" class="btn btn-sm btn-success">Guardar</button></td>
+                        <td class="text-white-50"><%= c.getIdCliente() %></td>
+                        <td><input type="text" name="nombre" value="<%= c.getNombre() %>" class="form-control form-control-sm bg-dark text-white border-secondary"></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
                     </form>
                     <form action="servicio" method="post" onsubmit="return confirm('¿Seguro que deseas eliminar este cliente y todos sus pedidos?')">
                         <input type="hidden" name="tipo" value="eliminarCliente">
                         <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
-                        <td><button type="submit" class="btn btn-sm btn-danger">Eliminar</button></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-danger">🗑️ Eliminar</button></td>
                     </form>
                 </tr>
                 <%
@@ -53,61 +62,64 @@
     </div>
 
     <!-- Pedidos Polarizado -->
-<div class="card mb-5 shadow-sm">
-    <div class="card-header bg-primary text-white fw-bold">Pedidos - Polarizados</div>
-    <div class="card-body p-0">
-        <table class="table table-striped table-hover mb-0">
-            <thead class="table-dark">
-                <tr><th>ID</th><th>Cliente</th><th>Material</th><th>Luz Visible</th><th>Fecha</th><th>Acción</th></tr>
-            </thead>
-            <tbody>
-            <%
-                List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
-                if (pedidos != null) {
-                    for (Pedido p : pedidos) {
-            %>
-            <tr>
-                <form action="servicio" method="post">
-                    <input type="hidden" name="tipo" value="actualizarPolarizado">
-                    <input type="hidden" name="idPedido" value="<%= p.getIdPedido() %>">
-                    <td><%= p.getIdPedido() %></td>
-                    <td><%= p.getNombreCliente() %></td>
-                    <td>
-                        <select name="material" class="form-select form-select-sm">
-                            <option value="nanoCarbono" <%= "nanoCarbono".equals(p.getMaterial()) ? "selected" : "" %>>nanoCarbono</option>
-                            <option value="nanoCeramico" <%= "nanoCeramico".equals(p.getMaterial()) ? "selected" : "" %>>nanoCeramico</option>
-                            <option value="Crystalline" <%= "Crystalline".equals(p.getMaterial()) ? "selected" : "" %>>Crystalline</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select name="luzVisible" class="form-select form-select-sm">
-                            <option value="5%" <%= "5%".equals(p.getLuzVisible()) ? "selected" : "" %>>5%</option>
-                            <option value="20%" <%= "20%".equals(p.getLuzVisible()) ? "selected" : "" %>>20%</option>
-                            <option value="35%" <%= "35%".equals(p.getLuzVisible()) ? "selected" : "" %>>35%</option>
-                            <option value="50%" <%= "50%".equals(p.getLuzVisible()) ? "selected" : "" %>>50%</option>
-                        </select>
-                    </td>
-                    <td><%= p.getFechaPedido() %></td>
-                    <td><button type="submit" class="btn btn-sm btn-primary">Guardar</button></td>
-                </form>
-            </tr>
-            <%
+    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
+        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+            🚗 Pedidos - Polarizados
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-dark table-striped table-hover mb-0">
+                <thead>
+                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Material</th><th class="text-secondary">Luz Visible</th><th class="text-secondary">Fecha</th><th class="text-secondary">Acción</th></tr>
+                </thead>
+                <tbody>
+                <%
+                    List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
+                    if (pedidos != null) {
+                        for (Pedido p : pedidos) {
+                %>
+                <tr>
+                    <form action="servicio" method="post">
+                        <input type="hidden" name="tipo" value="actualizarPolarizado">
+                        <input type="hidden" name="idPedido" value="<%= p.getIdPedido() %>">
+                        <td class="text-white-50"><%= p.getIdPedido() %></td>
+                        <td class="text-white"><%= p.getNombreCliente() %></td>
+                        <td>
+                            <select name="material" class="form-select form-select-sm bg-dark text-white border-secondary">
+                                <option value="nanoCarbono" <%= "nanoCarbono".equals(p.getMaterial()) ? "selected" : "" %>>nanoCarbono</option>
+                                <option value="nanoCeramico" <%= "nanoCeramico".equals(p.getMaterial()) ? "selected" : "" %>>nanoCeramico</option>
+                                <option value="Crystalline" <%= "Crystalline".equals(p.getMaterial()) ? "selected" : "" %>>Crystalline</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="luzVisible" class="form-select form-select-sm bg-dark text-white border-secondary">
+                                <option value="5%" <%= "5%".equals(p.getLuzVisible()) ? "selected" : "" %>>5%</option>
+                                <option value="20%" <%= "20%".equals(p.getLuzVisible()) ? "selected" : "" %>>20%</option>
+                                <option value="35%" <%= "35%".equals(p.getLuzVisible()) ? "selected" : "" %>>35%</option>
+                                <option value="50%" <%= "50%".equals(p.getLuzVisible()) ? "selected" : "" %>>50%</option>
+                            </select>
+                        </td>
+                        <td class="text-white-50"><%= p.getFechaPedido() %></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
+                    </form>
+                </tr>
+                <%
+                        }
                     }
-                }
-            %>
-            </tbody>
-        </table>
+                %>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-
 
     <!-- Pedidos Logotipo -->
-    <div class="card mb-5 shadow-sm">
-        <div class="card-header bg-success text-white fw-bold">Pedidos - Logotipos</div>
+    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
+        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+            🎨 Pedidos - Logotipos
+        </div>
         <div class="card-body p-0">
-            <table class="table table-striped table-hover mb-0">
-                <thead class="table-dark">
-                    <tr><th>ID</th><th>Cliente</th><th>Servicio</th><th>Fecha</th><th>Acción</th></tr>
+            <table class="table table-dark table-striped table-hover mb-0">
+                <thead>
+                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Acción</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -119,10 +131,10 @@
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarLogotipo">
                         <input type="hidden" name="idPedidoLogotipo" value="<%= pl.getIdPedidoLogotipo() %>">
-                        <td><%= pl.getIdPedidoLogotipo() %></td>
-                        <td><%= pl.getNombreCliente() %></td>
+                        <td class="text-white-50"><%= pl.getIdPedidoLogotipo() %></td>
+                        <td class="text-white"><%= pl.getNombreCliente() %></td>
                         <td>
-                            <select name="servicioSeleccionado" class="form-select form-select-sm">
+                            <select name="servicioSeleccionado" class="form-select form-select-sm bg-dark text-white border-secondary">
                                 <option value="Placa Provisional" <%= "Placa Provisional".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Placa Provisional</option>
                                 <option value="Tapasol" <%= "Tapasol".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Tapasol</option>
                                 <option value="Forrado de faros" <%= "Forrado de faros".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Forrado de faros</option>
@@ -131,8 +143,8 @@
                                 <option value="Manijas" <%= "Manijas".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Manijas</option>
                             </select>
                         </td>
-                        <td><%= pl.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-success">Guardar</button></td>
+                        <td class="text-white-50"><%= pl.getFechaPedido() %></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
                     </form>
                 </tr>
                 <%
@@ -145,12 +157,14 @@
     </div>
 
     <!-- Pedidos Instalaciones -->
-    <div class="card mb-5 shadow-sm">
-        <div class="card-header bg-warning fw-bold">Pedidos - Instalaciones</div>
+    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
+        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
+            ⚡ Pedidos - Instalaciones
+        </div>
         <div class="card-body p-0">
-            <table class="table table-striped table-hover mb-0">
-                <thead class="table-dark">
-                    <tr><th>ID</th><th>Cliente</th><th>Servicio</th><th>Fecha</th><th>Acción</th></tr>
+            <table class="table table-dark table-striped table-hover mb-0">
+                <thead>
+                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Acción</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -162,10 +176,10 @@
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarInstalacion">
                         <input type="hidden" name="idPedidoInstalacion" value="<%= pi.getIdPedidoInstalacion() %>">
-                        <td><%= pi.getIdPedidoInstalacion() %></td>
-                        <td><%= pi.getNombreCliente() %></td>
+                        <td class="text-white-50"><%= pi.getIdPedidoInstalacion() %></td>
+                        <td class="text-white"><%= pi.getNombreCliente() %></td>
                         <td>
-                            <select name="servicioSeleccionado" class="form-select form-select-sm">
+                            <select name="servicioSeleccionado" class="form-select form-select-sm bg-dark text-white border-secondary">
                                 <option value="Tapizado de Techo" <%= "Tapizado de Techo".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Tapizado de Techo</option>
                                 <option value="Tapizado de Piso" <%= "Tapizado de Piso".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Tapizado de Piso</option>
                                 <option value="Confeccion de Fundas" <%= "Confeccion de Fundas".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Confeccion de Fundas</option>
@@ -173,8 +187,8 @@
                                 <option value="Instalacion de GPS" <%= "Instalacion de GPS".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Instalacion de GPS</option>
                             </select>
                         </td>
-                        <td><%= pi.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-warning">Guardar</button></td>
+                        <td class="text-white-50"><%= pi.getFechaPedido() %></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
                     </form>
                 </tr>
                 <%
@@ -186,11 +200,8 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <a href="servicio?tipo=reportes" class="btn btn-secondary px-4">Volver a Reportes</a>
-    </div>
-
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
